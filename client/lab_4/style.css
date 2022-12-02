@@ -11,7 +11,7 @@ Form Styles
 */
 
 html {
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
   font-size: 16px;
   min-width: 300px;
   overflow-x: hidden;
@@ -33,7 +33,7 @@ body {
   font-family: ‘Segoe UI’, Candara, ‘Bitstream Vera Sans’, ‘DejaVu Sans’, ‘Bitsream Vera Sans’, ‘Trebuchet MS’, Verdana, ‘Verdana Ref’, sans-serif;
   font-weight: 400;
   line-height: 1.5;
-  background-color: rgb(239, 239, 239);
+  background-color: #f1b767;
 }
 
 
@@ -61,7 +61,7 @@ form {
 
 
 .wrapper {
-  min-height: 100vh;
+  min-height: 100vh;;
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -77,10 +77,10 @@ form {
 }
 
 .header {
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1.5rem;
+  padding-top: 0rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
+  padding-bottom: 0.5rem;
 }
 
 
@@ -95,12 +95,13 @@ form {
   /* this will push other blocks out of the way */
 
   /* colors */
-  background-color: #ffe08a;
-  color: #4a4a4a;
+  background-color: #7c11ff3f;
+  color: pink;
 
   /* shapes */
   border-radius: 6px;
   font-size: 1.5rem;
+  font-family: fantasy;
   padding: 1.25rem;
   margin:0; /* removing the margin on h1 tags means the header pins to the top if we move */
 
@@ -109,6 +110,53 @@ form {
   box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
 }
 
+.button {
+  color: rgb(0, 0, 0);
+  background-color: rgba(192, 255, 254, 0.195);
+  font-family: fantasy;
+}
+
+.input {
+  color:rgb(0, 0, 0) ;
+  background-color: rgb(255, 255, 255);
+  font-family: fantasy;
+}
+
+.restaurant{
+  color: #000000;
+  font-family: fantasy;
+  border: solid;
+  padding: 1cm;
+
+}
+
+.right_section h3{
+  font-family: fantasy;
+  font-size: 28;
+  color: #06af6a;
+  background-color: rgba(192, 255, 254, 0.195);
+  padding: 10px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+}
+.box2 h3 {
+  display: block;
+  /* this will push other blocks out of the way */
+
+  /* colors */
+  color: pink;
+
+  font-family: fantasy;
+
+  /* shapes */
+  border-radius: 6px;
+  font-size: 2.5rem;
+  padding: 1.25rem;
+  margin:0; /* removing the margin on h1 tags means the header pins to the top if we move */
+
+
+  /* box-shadows are fancy */
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+}
 
 /*
   Rules can be combined on a block to apply the 'cascade' in order
@@ -120,8 +168,18 @@ form {
 */
 
 .box {
-  background-color: rgba(239, 239, 239, 0.40);
-  border: 2px dashed;
+  background-color: #ff8577;
+  border: 4px solid;
+  border-radius: 4px;
+
+  width: fit-content;
+  height:fit-content;
+  padding: 1.5rem;
+  margin: 0 auto;
+}
+
+.box2 {
+  border: 1px  solid;
   border-radius: 4px;
 
   width: fit-content;
@@ -131,18 +189,22 @@ form {
 }
 
 .left_section {
-  background-color: rgba(0, 139, 139, 0.8);
+  background-color:#5c1919;
   flex: 0 1 auto;
   margin: 1rem;
   padding: 1.5rem;
 }
 
 .right_section {
-  background-color: rgba(255, 224, 138, 0.7);
+  background-color: rgba(255, 255, 255, 0.666);
   flex: 1 2 auto;
   margin: 1rem;
   align-items: center;
   max-width: 450px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+
 }
 
 /*
@@ -152,28 +214,28 @@ form {
 */
 
 .footer {
-  flex-shrink: 0;
+  flex-shrink: 5;
   padding: 1rem;
-  background-color: rgba(0, 139, 139, 0.8);
+  background-color: rgb(5, 73, 56);
   font-size: 1.2rem;
   font-weight: 600;
 }
 
 .footer a {
-  color: rgba(255, 224, 138, 1);
+  color: rgb(251, 76, 76);
   text-decoration: underline;
-}
 
 /*
   This is an example of a 'pseudoclass'
   In this instance, it says what to do if a mouse hovers over a link
   This is pretty desktop-specific, since there's no hover function on touchscreens
 */
+}
 .footer a:hover {
   /* Hue, saturation, luminosity, alpha */
-  background-color: hsla(0, 0%, 90%, 0.15);
+  background-color: hsla(155, 100%, 50%, 0.15);
   /* red, green, blue, alpha */
-  color: rgb(246, 169, 93);
+  color: rgb(252, 126, 0);
   text-decoration: none;
 }
 
@@ -301,6 +363,13 @@ form label {
     /* Rules in here will only apply when a screen is the correct size */
     /* check it out by using your developer tools to shrink your screen-size */
     .container {
-      background-color: rgba(204, 8, 162, 0.65);
+      background-color: #fc5959;
+      justify-content: center;
+      align-items: center;
+      flex-flow: column-reverse;
+
+    }
+    body {
+      background-color: #fc5959;
     }
 }
