@@ -23,7 +23,7 @@ function updateSlidePosition() {
     slide.classList.remove('visible');
     slide.classList.add('hidden');
   });
-  console.log(slidePosition)
+  console.log(slidePosition);
   slides[slidePosition].classList.add('visible');
 }
 
@@ -47,8 +47,7 @@ function moveToPrevSlide() {
   } else {
     slidePosition -= 1;
   }
- 
- 
+
   // add your code in here for when you click the "prev" button
   /*
     add an if statement here that checks
