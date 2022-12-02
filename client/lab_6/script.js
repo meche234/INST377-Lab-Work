@@ -20,7 +20,7 @@ function injectHTML(list) {
 
   const target = document.querySelector('#restaurant_list');
   target.innerHTML = '';
-  
+
   const listEl = document.createElement('ol');
   target.appendChild(listEl);
   list.forEach((item) => {
