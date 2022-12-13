@@ -3,6 +3,16 @@
   by adding `<script src="script.js">` just before your closing `</body>` tag
 */
 
+async function loadFoodServiceData(req, res, next) {
+  const url = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'; // remote URL! you can test it in your browser
+  const data = await fetch(url); // We're using a library that mimics a browser 'fetch' for simplicity
+  const json = await data.json(); // the data isn't json until we access it using dot notation
+
+  const reply = json.filter((item) => Boolean(item.geocoded_column_1)).filter((item) => Boolean(item.name));
+
+  return reply;
+}
+
 async function mainEvent() { // the async keyword means we can make API requests
   const form = document.querySelector('.main_form'); // This class name needs to be set on your form before you can listen for an event on it
   form.addEventListener('submit', async (submitEvent) => { // async has to be declared on every function that needs to "await" something
@@ -36,7 +46,8 @@ async function mainEvent() { // the async keyword means we can make API requests
     */
 
     // const results = await fetch('/api/foodServicePG');
-    const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json`)
+    const results = await loadFoodServiceData();
+    console.log(results);
     /*
    ## Get request with query parameters
 
@@ -53,8 +64,8 @@ async function mainEvent() { // the async keyword means we can make API requests
     */
 
     // This changes the response from the GET into data we can use - an "object"
-    const arrayFromJson = await results.json();
-    console.table(arrayFromJson.data); // this is called "dot notation"
+    const arrayFromJson = results;
+    console.table(arrayFromJson); // this is called "dot notation"
     // arrayFromJson.data - we're accessing a key called 'data' on the returned object
     // it initially contains all 1,000 records from your request
   });
