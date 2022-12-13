@@ -82,6 +82,16 @@ function filterList(array, filterInputValue) {
   });
 }
 
+async function loadFoodServiceData(req, res, next) {
+  const url = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'; // remote URL! you can test it in your browser
+  const data = await fetch(url); // We're using a library that mimics a browser 'fetch' for simplicity
+  const json = await data.json(); // the data isn't json until we access it using dot notation
+
+  const reply = json.filter((item) => Boolean(item.geocoded_column_1)).filter((item) => Boolean(item.name));
+
+  return reply;
+}
+
 async function mainEvent() {
   /*
         ## Main Event
@@ -101,8 +111,8 @@ async function mainEvent() {
         This next line goes to the request for 'GET' in the file at /server/routes/foodServiceRoutes.js
         It's at about line 27 - go have a look and see what we're retrieving and sending back.
        */
-  const results = await fetch('/api/foodServicePG');
-  const arrayFromJson = await results.json(); // here is where we get the data from our request as JSON
+  const results = await loadFoodServiceData();
+  const arrayFromJson = results; // here is where we get the data from our request as JSON
 
   /*
         Below this comment, we log out a table of all the results using "dot notation"
@@ -110,17 +120,17 @@ async function mainEvent() {
         Dot notation is preferred in JS unless you have a good reason to use brackets
         The 'data' key, which we set at line 38 in foodServiceRoutes.js, contains all 1,000 records we need
       */
-  console.table(arrayFromJson.data);
+  console.table(arrayFromJson);
 
   // in your browser console, try expanding this object to see what fields are available to work with
   // for example: arrayFromJson.data[0].name, etc
-  console.log(arrayFromJson.data[0]);
+  console.log(arrayFromJson[0]);
 
   // this is called "string interpolation" and is how we build large text blocks with variables
-  console.log(`${arrayFromJson.data[0].name} ${arrayFromJson.data[0].category}`);
+  console.log(`${arrayFromJson[0].name} ${arrayFromJson[0].category}`);
 
   // This IF statement ensures we can't do anything if we don't have information yet
-  if (arrayFromJson.data?.length > 0) { // the question mark in this means "if this is set at all"
+  if (arrayFromJson?.length > 0) { // the question mark in this means "if this is set at all"
     let currentList = [];
 
     submit.style.display = 'block';
@@ -142,7 +152,7 @@ async function mainEvent() {
       submitEvent.preventDefault();
 
       // This constant will have the value of your 15-restaurant collection when it processes
-      currentList = processRestaurants(arrayFromJson.data);
+      currentList = processRestaurants(arrayFromJson);
 
       // And this function call will perform the "side effect" of injecting the HTML list for you
       injectHTML(currentList);
