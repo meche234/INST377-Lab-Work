@@ -105,9 +105,49 @@ function makerPlace(array, map) {
     const {coordinates} = item.geocoded_column_1;
     L.marker([coordinates[1], coordinates[0]]).addTo(map);
     if (index === 0) {
-      map.setView([coordinates[1], coordinates[0]], );
+      map.setView([coordinates[1], coordinates[0]], 10);
     }
   });
+}
+
+function initChart(chart) {
+  const lables = ['january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june'
+  ];
+
+  const data = {
+    lables: lables,
+    datasets: [{
+      label: 'My first data set',
+      backgroundColor: 'rgb(255,255,255)',
+      borderColor: 'rgb(0,0,0)',
+      data: [0, 10, 5, 2, 20, 30, 45]
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+
+  return new Chart(
+    chart,
+    config
+  );
+}
+
+async function getData() {
+  const url = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'; // remote URL! you can test it in your browser
+  const data = await fetch(url); // We're using a library that mimics a browser 'fetch' for simplicity
+  const json = await data.json(); // the data isn't json until we access it using dot notation
+
+  const reply = json.filter((item) => Boolean(item.geocoded_column_1)).filter((item) => Boolean(item.name));
+  return reply;
 }
 
 async function mainEvent() {
@@ -119,10 +159,11 @@ async function mainEvent() {
         */
 
   // the async keyword means we can make API requests
-  const pageMap = initMap();
+  // const pageMap = initMap();
   const form = document.querySelector('.main_form'); // get your main form so you can do JS with it
   const submit = document.querySelector('#get-resto'); // get a reference to your submit button
   const loadAnimation = document.querySelector('.lds-ellipsis');
+  const chartTarget = document.querySelector('#myChart');
   submit.style.display = 'none'; // let your submit button disappear
 
   /*
@@ -132,6 +173,9 @@ async function mainEvent() {
          */
   const results = await fetch('/api/foodServicePG');
   const arrayFromJson = await results.json(); // here is where we get the data from our request as JSON
+
+  initChart(chartTarget);
+  const chartData = await getData();
 
   /*
           Below this comment, we log out a table of all the results using "dot notation"
@@ -149,7 +193,7 @@ async function mainEvent() {
   console.log(`${arrayFromJson.data[0].name} ${arrayFromJson.data[0].category}`);
 
   // This IF statement ensures we can't do anything if we don't have information yet
-  if (arrayFromJson.data?.length > 0) { // the question mark in this means "if this is set at all"
+  if (chartData.data?.length > 0) { // the question mark in this means "if this is set at all"
     let currentList = [];
 
     submit.style.display = 'block';
@@ -162,7 +206,7 @@ async function mainEvent() {
       console.log('input', event.target.value);
       const filteredList = filterList(currentList, event.target.value);
       injectHTML(filteredList);
-      makerPlace(filteredList, pageMap);
+      // makerPlace(filteredList, pageMap);
     });
 
     // And here's an eventListener! It's listening for a "submit" button specifically being clicked
@@ -176,7 +220,7 @@ async function mainEvent() {
 
       // And this function call will perform the "side effect" of injecting the HTML list for you
       injectHTML(currentList);
-      makerPlace(currentList, pageMap);
+      // makerPlace(currentList, pageMap);
 
       // By separating the functions, we open the possibility of regenerating the list
       // without having to retrieve fresh data every time
